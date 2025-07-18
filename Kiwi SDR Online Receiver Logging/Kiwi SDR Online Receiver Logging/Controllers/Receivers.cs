@@ -11,13 +11,13 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Controllers
         {
             var receiver = new Receiver()
             {
-                UrlId    = 1,
-                URL      = "http://kb6c.proxy.kiwisdr.com:8073/",
-                Antenna  = "Wellbrooke Loop",
-                Name     = "KB6C/6",
-                Grid     = "DM04kr",
-                Location = "Stauffer, California",
-                ASL      = 1585
+                ReceiverId = 1,
+                URL        = "http://kb6c.proxy.kiwisdr.com:8073/",
+                Antenna    = "Wellbrooke Loop",
+                Name       = "KB6C/6",
+                Grid       = "DM04kr",
+                Location   = "Stauffer, California",
+                ASL        = 1585
             };
 
             // Test Return value
@@ -29,13 +29,13 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Controllers
         {
             var receiver = new Receiver()
             {
-                UrlId    = id,
-                URL      = "http://kb6c.proxy.kiwisdr.com:8073/",
-                Antenna  = "Wellbrooke Loop",
-                Name     = "KB6C/6",
-                Grid     = "DM04kr",
-                Location = "Stauffer, California",
-                ASL      = 1585
+                ReceiverId = id,
+                URL        = "http://kb6c.proxy.kiwisdr.com:8073/",
+                Antenna    = "Wellbrooke Loop",
+                Name       = "KB6C/6",
+                Grid       = "DM04kr",
+                Location   = "Stauffer, California",
+                ASL        = 1585
             };
 
             // Test Return value

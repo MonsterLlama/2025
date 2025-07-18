@@ -6,7 +6,7 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Model
     {
         [Required]
         [Range(1, int.MaxValue)]
-        public int UrlId { get; set; }
+        public int ReceiverId { get; set; }
 
         [Url]
         public string URL { get; set; } = String.Empty;
