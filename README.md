@@ -1,2 +1,1 @@
-# 2025
-2025 Code Projects and Practice
+This repo contains practice projects developed in 2025
