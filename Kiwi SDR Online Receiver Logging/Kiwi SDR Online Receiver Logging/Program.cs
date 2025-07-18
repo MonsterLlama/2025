@@ -1,4 +1,4 @@
-namespace Kiwi_SDR_Online_Receiver_Logging
+namespace MonsterLlama.KiwiSDR.Web.Logger
 {
     public class Program
     {
