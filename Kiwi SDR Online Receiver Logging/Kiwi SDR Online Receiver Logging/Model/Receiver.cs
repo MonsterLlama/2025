@@ -1,0 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Kiwi_SDR_Online_Receiver_Logging.Model
+{
+    public class Receiver
+    {
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int UrlId { get; set; }
+
+        [Url]
+        public string URL { get; set; } = String.Empty;
+
+        public string? Location { get; set; }
+
+        public string? Grid { get; set; }
+
+        public double ASL { get; set; }
+
+        public string? Antenna { get; set; }
+
+        [Required]
+        public string Name { get; set; } = String.Empty;
+
+    }
+}
