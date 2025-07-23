@@ -486,3 +486,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.json
+/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.Development.json
