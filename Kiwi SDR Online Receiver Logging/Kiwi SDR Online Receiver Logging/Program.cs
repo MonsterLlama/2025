@@ -17,6 +17,9 @@ namespace MonsterLlama.KiwiSDR.Web.Logger
 
             var secretKey = builder.Configuration.GetValue<string>("SecretKey");
 
+            //
+            //  Configure Jwt Bearer Token Authentication
+            //
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 

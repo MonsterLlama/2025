@@ -4,8 +4,8 @@
 ## Get latest from `dotnet new gitignore`
 
 # appsetttings
-.appsettings.json
-appsettings.Development.json
+/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.json
+/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.Development.json
 
 # dotenv files
 .env
@@ -486,5 +486,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.json
-/Kiwi SDR Online Receiver Logging/Kiwi SDR Online Receiver Logging/appsettings.Development.json
