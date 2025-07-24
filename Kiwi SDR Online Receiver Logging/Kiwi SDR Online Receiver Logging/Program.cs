@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MonsterLlama.KiwiSDR.Web.Logger.Data;
 using System.Text;
 
 namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
@@ -15,11 +17,21 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
             // Adds services for controllers to the services collection..
             builder.Services.AddControllers();
 
-            var secretKey = builder.Configuration.GetValue<string>("SecretKey");
+            //
+            //  Add Authentication DbContext
+            //
+            var authenticationDbConnectionString = builder.Configuration.GetConnectionString("AuthenticationDb");
+
+            builder.Services.AddDbContext<AuthenticationDbContext>(options => 
+            {
+                options.UseSqlServer(authenticationDbConnectionString);
+            });
 
             //
             //  Configure Jwt Bearer Token Authentication
             //
+            var secretKey = builder.Configuration.GetValue<string>("SecretKey");
+
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
@@ -36,7 +48,6 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
                 });
 
 
-            var identityDbConnectionString = builder.Configuration.GetConnectionString("IdentityUsersDb");
 
             var app = builder.Build();
 

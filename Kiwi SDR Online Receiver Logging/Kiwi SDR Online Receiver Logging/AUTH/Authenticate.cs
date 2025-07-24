@@ -10,6 +10,12 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
     [ApiController]
     public class Authenticate : ControllerBase
     {
+        private readonly AuthenticationDbContext db;
+
+        public Authenticate(AuthenticationDbContext authenticationDbContext)
+        {
+            this.db = authenticationDbContext;
+        }
 
         [HttpGet]
         public IActionResult AuthenticateClient([FromBody] WebApiCredentials creds)
@@ -20,6 +26,12 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
             }
 
             // Validate Credentials
+            var credsFound = db.Set<WebApiCredentials>().Any(c => c.ClientId == creds.ClientId && c.ClientSecret == creds.ClientSecret);
+
+            if(!credsFound)
+            {
+                return Unauthorized("You're unauthorized to access this resource.");
+            }
 
             // Create Jwt Security Token
 
