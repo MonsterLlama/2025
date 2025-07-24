@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
 using MonsterLlama.KiwiSDR.Web.Logger.Data;
 
 namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
@@ -9,24 +10,20 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
     [ApiController]
     public class Authenticate : ControllerBase
     {
-        private readonly SignInManager<ApplicationIdentityUser> signInManager;
-
-        public Authenticate(SignInManager<ApplicationIdentityUser> signInManager)
-        {
-            this.signInManager = signInManager;
-        }
 
         [HttpGet]
-        public async Task<IActionResult> AuthenticateUserAsync([FromBody] ApplicationIdentityUser user)
+        public IActionResult AuthenticateClient([FromBody] WebApiCredentials creds)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-           var result = await this.signInManager.PasswordSignInAsync(user: user, password: user.ClientSecret, isPersistent: true, lockoutOnFailure: false);
+            // Validate Credentials
 
-           return Ok("result");
+            // Create Jwt Security Token
+
+           return Ok(creds);
         }
     }
 }

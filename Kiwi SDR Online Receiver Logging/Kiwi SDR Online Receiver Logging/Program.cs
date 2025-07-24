@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Kiwi_SDR_Online_Receiver_Logging
+namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
 {
     public class Program
     {
