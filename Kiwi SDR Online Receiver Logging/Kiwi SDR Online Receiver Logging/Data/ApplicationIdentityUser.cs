@@ -7,5 +7,7 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Data
         public string ClientId { get; set; } = string.Empty;
 
         public string ClientSecret { get; set; } = string.Empty;
+
+        public string AppName { get; set; } = string.Empty;
     }
 }

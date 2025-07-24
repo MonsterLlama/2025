@@ -60,7 +60,7 @@ namespace MonsterLlama.KiwiSDR.Web.Logger
                 {
                     options.Password.RequiredLength         = 8;
                     options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase       = true;
+                    options.Password.RequireUppercase       = false;
                     options.Password.RequireLowercase       = true;
                     options.Password.RequireDigit           = true;
                     options.Password.RequiredUniqueChars    = 5;
