@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace Kiwi_SDR_Online_Receiver_Logging
 {
     public class Program
@@ -32,37 +36,7 @@ namespace Kiwi_SDR_Online_Receiver_Logging
                 });
 
 
-
             var identityDbConnectionString = builder.Configuration.GetConnectionString("IdentityUsersDb");
-
-            //
-            //  Configure Identity EF Core
-            //
-            builder.Services
-                .AddDbContext<ApplicationIdentityDbContext>(options => 
-                {
-                    options.UseSqlServer(connectionString: identityDbConnectionString);
-                })
-            ;
-
-            //
-            //  Configure Identity
-            //
-            builder.Services
-                .AddIdentity<ApplicationIdentityUser, IdentityRole>(options => 
-                {
-                    options.Password.RequiredLength         = 8;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase       = false;
-                    options.Password.RequireLowercase       = true;
-                    options.Password.RequireDigit           = true;
-                    options.Password.RequiredUniqueChars    = 5;
-                    options.Lockout.MaxFailedAccessAttempts = 3;
-                    options.Lockout.DefaultLockoutTimeSpan  = TimeSpan.FromMinutes(60);
-                })
-                .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
-
-
 
             var app = builder.Build();
 

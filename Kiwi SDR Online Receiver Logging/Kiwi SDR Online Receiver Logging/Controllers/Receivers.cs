@@ -1,5 +1,5 @@
-﻿using Kiwi_SDR_Online_Receiver_Logging.Model;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Model;
 
 namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
 {
