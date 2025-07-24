@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>MonsterLlama.KiwiSDR.Web.Logger</RootNamespace>
+    <RootNamespace>Kiwi_SDR_Online_Receiver_Logging</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

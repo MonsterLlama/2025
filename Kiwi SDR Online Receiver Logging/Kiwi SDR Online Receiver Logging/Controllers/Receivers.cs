@@ -1,7 +1,7 @@
-﻿using MonsterLlama.KiwiSDR.Web.Logger.Model;
+﻿using Kiwi_SDR_Online_Receiver_Logging.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MonsterLlama.KiwiSDR.Web.Logger.Controllers
+namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
 {
     [Route("api/[controller]")]
     public class Receivers : ControllerBase

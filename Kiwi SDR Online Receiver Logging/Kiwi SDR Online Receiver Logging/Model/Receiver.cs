@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MonsterLlama.KiwiSDR.Web.Logger.Model
+namespace Kiwi_SDR_Online_Receiver_Logging.Model
 {
     public class Receiver
     {
