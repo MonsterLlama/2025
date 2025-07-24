@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MonsterLlama.KiwiSDR.Web.Logger.Data;
 using System.Text;
 
 namespace MonsterLlama.KiwiSDR.Web.Logger
@@ -34,6 +37,39 @@ namespace MonsterLlama.KiwiSDR.Web.Logger
                         ClockSkew                = TimeSpan.Zero
                     };
                 });
+
+
+
+            var identityDbConnectionString = builder.Configuration.GetConnectionString("IdentityUsersDb");
+
+            //
+            //  Configure Identity EF Core
+            //
+            builder.Services
+                .AddDbContext<ApplicationIdentityDbContext>(options => 
+                {
+                    options.UseSqlServer(connectionString: identityDbConnectionString);
+                })
+            ;
+
+            //
+            //  Configure Identity
+            //
+            builder.Services
+                .AddIdentity<ApplicationIdentityUser, IdentityRole>(options => 
+                {
+                    options.Password.RequiredLength         = 8;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase       = true;
+                    options.Password.RequireLowercase       = true;
+                    options.Password.RequireDigit           = true;
+                    options.Password.RequiredUniqueChars    = 5;
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+                    options.Lockout.DefaultLockoutTimeSpan  = TimeSpan.FromMinutes(60);
+                })
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
+
+
 
             var app = builder.Build();
 
