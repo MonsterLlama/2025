@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
-using MonsterLlama.KiwiSDR.Web.Logger.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

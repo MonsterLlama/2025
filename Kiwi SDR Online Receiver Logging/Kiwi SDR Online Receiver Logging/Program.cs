@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MonsterLlama.KiwiSDR.Web.Logger.Data;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
 using System.Text;
 
 namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
