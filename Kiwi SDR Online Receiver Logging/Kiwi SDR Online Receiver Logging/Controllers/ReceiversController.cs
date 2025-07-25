@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Filters;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Model;
 
 namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
 {
     [Route("api/[controller]")]
-    public class Receivers : ControllerBase
+    [ValidateJwtSecurityTokenFilter]
+    public class ReceiversController : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAllServers()

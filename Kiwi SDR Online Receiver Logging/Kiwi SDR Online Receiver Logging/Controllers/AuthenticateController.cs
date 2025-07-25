@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
 using MonsterLlama.KiwiSDR.Web.Logger.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,12 +13,12 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Authenticate : ControllerBase
+    public class AuthenticateController : ControllerBase
     {
         private readonly AuthenticationDbContext db;
         private readonly IConfiguration configuration;
 
-        public Authenticate(AuthenticationDbContext authenticationDbContext, IConfiguration configuration)
+        public AuthenticateController(AuthenticationDbContext authenticationDbContext, IConfiguration configuration)
         {
             db = authenticationDbContext;
             this.configuration = configuration;
@@ -44,33 +45,13 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
                 return Unauthorized("You're unauthorized to access this resource.");
             }
 
-            // Create and populate the IEnumerable<Claim> object for the Jwt SecurityToken
-            var claims = new List<Claim>();
-
-            claims.Add(new Claim("ClientName",       creds.ClientName));
-            claims.Add(new Claim("CanReadReceivers", creds.CanReadReceivers.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanReadLogEntries.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanAddReceiver.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanAddLogEntry.ToString()));
-
-            // Create the SigningCredentials object for the Jwt SecurityToken
-            var secretKey          = configuration.GetValue<string>("SecretKey");
-            var securityKey        = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey ?? string.Empty));
-            var signingCredentials = new SigningCredentials(key: securityKey, algorithm: SecurityAlgorithms.HmacSha256Signature);
-
-            // Create Jwt Security Token
-            var jwt = new JwtSecurityToken(
-                claims:             claims,
-                notBefore:          DateTime.UtcNow,
-                expires:            DateTime.UtcNow.AddDays(1),
-                signingCredentials: signingCredentials
-                );
-
+            DateTime ValidTo; // It just looks cleaner up here.. ;)
             try
             {
-                var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+                var secretKey =  configuration.GetValue<string>("SecretKey") ?? String.Empty;
+                var token     = Authentication.CreateJwtToken(creds, secretKey, out ValidTo);
 
-                return Ok(new {token, expires_at = jwt.ValidTo });
+                return Ok(new {token, expires_at = ValidTo });
             }
             catch (SecurityTokenEncryptionFailedException e)
             {
