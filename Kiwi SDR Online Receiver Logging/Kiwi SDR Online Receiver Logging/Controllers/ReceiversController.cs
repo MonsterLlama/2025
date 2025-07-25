@@ -9,6 +9,7 @@ namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
     public class ReceiversController : ControllerBase
     {
         [HttpGet]
+        [RequiredClaimFilter("CanReadLogEntries", "true")]
         public IActionResult GetAllServers()
         {
             var receiver = new Receiver()
@@ -27,6 +28,7 @@ namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
         }
 
         [HttpGet("id={id}")]
+        [RequiredClaimFilter("CanReadLogEntries", "true")]
         public IActionResult GetReceiverById(int id)
         {
             var receiver = new Receiver()

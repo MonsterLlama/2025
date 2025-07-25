@@ -38,9 +38,11 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
             }
 
             // Validate Credentials
-            var credsFound = db.Set<WebApiCredentials>().Any(c => c.ClientId == creds.ClientId && c.ClientSecret == creds.ClientSecret);
+            var credentials = db.Set<WebApiCredentials>().FirstOrDefault(c => c.ClientId == creds.ClientId && c.ClientSecret == creds.ClientSecret);
 
-            if(!credsFound)
+            //var credsFound = db.Set<WebApiCredentials>().Any(c => c.ClientId == creds.ClientId && c.ClientSecret == creds.ClientSecret);
+
+            if(credentials is null)
             {
                 return Unauthorized("You're unauthorized to access this resource.");
             }
@@ -48,8 +50,9 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
             DateTime ValidTo; // It just looks cleaner up here.. ;)
             try
             {
+                
                 var secretKey =  configuration.GetValue<string>("SecretKey") ?? String.Empty;
-                var token     = Authentication.CreateJwtToken(creds, secretKey, out ValidTo);
+                var token     = Authentication.CreateJwtToken(credentials, secretKey, out ValidTo);
 
                 return Ok(new {token, expires_at = ValidTo });
             }

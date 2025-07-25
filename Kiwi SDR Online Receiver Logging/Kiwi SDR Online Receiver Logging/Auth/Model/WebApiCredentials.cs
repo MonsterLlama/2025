@@ -18,16 +18,12 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model
         [Required]
         public string ClientName {  get; set; } = string.Empty;
 
-        [Required]
-        public bool CanReadReceivers { get; set; } = false;
+        public string CanReadReceivers { get; set; } = string.Empty;
 
-        [Required]
-        public bool CanAddReceiver { get;set; } = false;
+        public string CanAddReceiver { get;set; } = string.Empty;
 
-        [Required]
-        public bool CanAddLogEntry { get; set; } = false;
+        public string CanAddLogEntry { get; set; } = string.Empty;
 
-        [Required]
-        public bool CanReadLogEntries { get; set; } = false;
+        public string CanReadLogEntries { get; set; } = string.Empty;
     }
 }

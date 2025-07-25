@@ -53,11 +53,11 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth
             // Create and populate the IEnumerable<Claim> object for the Jwt SecurityToken
             var claims = new List<Claim>();
 
-            claims.Add(new Claim("ClientName",       creds.ClientName));
-            claims.Add(new Claim("CanReadReceivers", creds.CanReadReceivers.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanReadLogEntries.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanAddReceiver.ToString()));
-            claims.Add(new Claim("CanReadReceivers", creds.CanAddLogEntry.ToString()));
+            claims.Add(new Claim("ClientName",        creds.ClientName));
+            claims.Add(new Claim("CanReadReceivers",  creds.CanReadReceivers));
+            claims.Add(new Claim("CanReadLogEntries", creds.CanReadLogEntries));
+            claims.Add(new Claim("CanAddReceiver",    creds.CanAddReceiver));
+            claims.Add(new Claim("CanAddLogEntry",    creds.CanAddLogEntry));
 
             // Create the SigningCredentials object for the Jwt SecurityToken
             var securityKey        = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey ?? string.Empty));
