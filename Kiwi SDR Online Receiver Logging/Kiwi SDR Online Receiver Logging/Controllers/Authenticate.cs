@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
+namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -19,7 +19,7 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
 
         public Authenticate(AuthenticationDbContext authenticationDbContext, IConfiguration configuration)
         {
-            this.db = authenticationDbContext;
+            db = authenticationDbContext;
             this.configuration = configuration;
         }
 
@@ -31,7 +31,7 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
                 return BadRequest();
             }
 
-            if (creds is null || String.IsNullOrWhiteSpace(creds.ClientId) || String.IsNullOrWhiteSpace(creds.ClientSecret))
+            if (creds is null || string.IsNullOrWhiteSpace(creds.ClientId) || string.IsNullOrWhiteSpace(creds.ClientSecret))
             {
                 return BadRequest("You're unauthorized to access this resource.");
             }
@@ -54,8 +54,8 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.AUTH
             claims.Add(new Claim("CanReadReceivers", creds.CanAddLogEntry.ToString()));
 
             // Create the SigningCredentials object for the Jwt SecurityToken
-            var secretKey          = this.configuration.GetValue<string>("SecretKey");
-            var securityKey        = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey ?? String.Empty));
+            var secretKey          = configuration.GetValue<string>("SecretKey");
+            var securityKey        = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey ?? string.Empty));
             var signingCredentials = new SigningCredentials(key: securityKey, algorithm: SecurityAlgorithms.HmacSha256Signature);
 
             // Create Jwt Security Token
