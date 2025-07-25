@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Data;
 using System.Text;
 
 namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
@@ -16,6 +17,17 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
 
             // Adds services for controllers to the services collection..
             builder.Services.AddControllers();
+
+
+            //
+            //  Add DbContext for the SDR Kiwi DB where Receivers and LogEntries are persisted
+            //
+            var sdrKiwiDbConnectionString = builder.Configuration.GetConnectionString("KiwiSdrDb");
+
+            builder.Services.AddDbContext<KiwiSdrDbContext>(options =>
+            {
+                options.UseSqlServer(sdrKiwiDbConnectionString);
+            });
 
             //
             //  Add Authentication DbContext

@@ -8,11 +8,11 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Model
     {
         [Required]
         [Range(1, long.MaxValue)]
-        public long LogId { get; set; }
+        [Key]
+        public long LogEntryId { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Receiver.ReceiverId))]
-        public Receiver? ReceiverId { get; set; }
+        public int ReceiverId { get; set; }
 
         [Required]
         public string Callsign { get; set; } = string.Empty;
@@ -37,6 +37,14 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Model
         [DataType(DataType.Time)]
         public TimeOnly LogTime_UTC { get; set; }
 
-        public string? Comment { get; set; }
+        public string City { get; set; } = String.Empty;
+
+        public string State { get; set; } = String.Empty;
+
+        public string Country { get; set; } = String.Empty;
+
+        public string Continent { get; set; } = String.Empty;
+
+        public string Comment { get; set; } = String.Empty;
     }
 }

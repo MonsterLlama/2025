@@ -5,7 +5,7 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model
 {
     public class AuthenticationDbContext : DbContext
     {
-        public AuthenticationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> dbContextOptions) : base(dbContextOptions)
         {
         }
 

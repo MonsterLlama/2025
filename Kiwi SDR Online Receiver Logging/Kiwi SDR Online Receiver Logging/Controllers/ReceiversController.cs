@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Data;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Filters;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Model;
 
@@ -8,22 +9,19 @@ namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
     [ValidateJwtSecurityTokenFilter]
     public class ReceiversController : ControllerBase
     {
+        private readonly KiwiSdrDbContext kiwiSdrDbContext;
+
+        public ReceiversController(KiwiSdrDbContext kiwiSdrDbContext) 
+        {
+            this.kiwiSdrDbContext = kiwiSdrDbContext;
+        }
+
         [HttpGet]
         [RequiredClaimFilter("CanReadLogEntries", "true")]
         public IActionResult GetAllServers()
         {
-            var receiver = new Receiver()
-            {
-                ReceiverId = 1,
-                URL        = "http://kb6c.proxy.kiwisdr.com:8073/",
-                Antenna    = "Wellbrooke Loop",
-                Name       = "KB6C/6",
-                Grid       = "DM04kr",
-                Location   = "Stauffer, California",
-                ASL        = 1585
-            };
+            var receiver = this.kiwiSdrDbContext.Set<Receiver>();
 
-            // Test Return value
             return Ok(receiver);
         }
 
@@ -31,16 +29,12 @@ namespace Kiwi_SDR_Online_Receiver_Logging.Controllers
         [RequiredClaimFilter("CanReadLogEntries", "true")]
         public IActionResult GetReceiverById(int id)
         {
-            var receiver = new Receiver()
+            var receiver = this.kiwiSdrDbContext.Set<Receiver>().FirstOrDefault(rcvr => rcvr.ReceiverId == id);
+
+            if (receiver is null)
             {
-                ReceiverId = id,
-                URL        = "http://kb6c.proxy.kiwisdr.com:8073/",
-                Antenna    = "Wellbrooke Loop",
-                Name       = "KB6C/6",
-                Grid       = "DM04kr",
-                Location   = "Stauffer, California",
-                ASL        = 1585
-            };
+                return NotFound();
+            }
 
             // Test Return value
             return Ok(receiver);
