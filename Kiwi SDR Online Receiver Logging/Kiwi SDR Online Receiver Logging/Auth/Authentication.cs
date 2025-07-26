@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth.Model;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,8 +7,35 @@ using System.Text;
 
 namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth
 {
-    public class Authentication
+    public static class Authentication
     {
+
+        public static async Task<bool> VerifyJsonWebToken(string? jwtToken, string secretKey)
+        {
+            if (String.IsNullOrWhiteSpace(jwtToken) || String.IsNullOrWhiteSpace(secretKey)) { return false; }
+
+            // Needed for IssuerSigningKey
+            if (jwtToken.StartsWith("Bearer "))
+                jwtToken = jwtToken.Substring("Bearer ".Length).Trim();
+
+            var keyBytes    = Encoding.UTF8.GetBytes(secretKey);
+            var securityKey = new SymmetricSecurityKey(keyBytes);
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey         = securityKey,
+                ValidateLifetime         = true,
+                ValidateIssuer           = false,
+                ValidateAudience         = false,
+                ClockSkew                = TimeSpan.Zero
+            };
+
+            var result = await new JsonWebTokenHandler().ValidateTokenAsync(jwtToken, validationParameters);
+
+            return result.IsValid;
+        }
+
         public static bool VerifyJwtToken(string? jwtToken, string secretKey)
         {
             if (String.IsNullOrWhiteSpace(jwtToken)) return false;
@@ -47,6 +75,37 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Auth
 
             return validatedToken is not null;
         }
+
+        public static string CreateJsonWebToken(WebApiCredentials creds, string secretKey, out DateTime ValidTo)
+        {
+            // Create and populate the Claims Dictionary<string, object>
+            var claims = new Dictionary<string, object>
+            {
+                ["ClientName"]          = creds.ClientName,
+                ["CanReadReceivers"]    = creds.CanReadReceivers,
+                ["CanReadLogEntries"]   = creds.CanReadLogEntries,
+                ["CanAddReceiver"]      = creds.CanAddReceiver,
+                ["CanAddLogEntry"]      = creds.CanAddLogEntry
+            };
+
+            var keyBytes           = Encoding.UTF8.GetBytes(secretKey);
+            var securityKey        = new SymmetricSecurityKey(keyBytes);
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            // Create Security Token Descriptor needed by the JsonWebToken constructor
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                SigningCredentials  = signingCredentials,
+                Claims              = claims,
+                NotBefore           = DateTime.UtcNow,
+                Expires             = DateTime.UtcNow.AddDays(1) 
+            };
+
+            ValidTo = tokenDescriptor.Expires.Value;
+
+            return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
+        }
+
 
         public static string CreateJwtToken(WebApiCredentials creds, string secretKey, out DateTime ValidTo)
         {

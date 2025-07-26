@@ -20,7 +20,7 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Filters
                 var configuration = context.HttpContext.RequestServices.GetService<IConfiguration>();
                 var securityKey   = configuration?.GetValue<string>("SecretKey") ?? String.Empty;
 
-                if (!Authentication.VerifyJwtToken(token, securityKey))
+                if (!await Authentication.VerifyJsonWebToken(token, securityKey))
                 {
                     context.Result = new UnauthorizedResult();
                 }

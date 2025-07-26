@@ -51,7 +51,7 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Controllers
             {
                 
                 var secretKey =  configuration.GetValue<string>("SecretKey") ?? String.Empty;
-                var token     = Authentication.CreateJwtToken(credentials, secretKey, out ValidTo);
+                var token     = Authentication.CreateJsonWebToken(credentials, secretKey, out ValidTo);
 
                 return Ok(new {token, expires_at = ValidTo });
             }
