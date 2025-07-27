@@ -6,8 +6,6 @@ namespace MonsterLlama.KiwiSDR.Web.Logger.Model
 {
     public class LogEntry
     {
-        [Required]
-        [Range(1, long.MaxValue)]
         [Key]
         public long LogEntryId { get; set; }
 
