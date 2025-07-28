@@ -4,8 +4,6 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging.Model
 {
     public class Receiver
     {
-        [Required]
-        [Range(1, int.MaxValue)]
         [Key]
         public int ReceiverId { get; set; }
 

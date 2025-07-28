@@ -59,8 +59,6 @@ namespace MonsterLlama.Kiwi_SDR_Online_Receiver_Logging
                     };
                 });
 
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
